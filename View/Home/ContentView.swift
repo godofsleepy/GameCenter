@@ -53,7 +53,7 @@ struct ContentView: View {
                                 if self.index < 0{
                                     self.index = 3
                                 }
-                                //                                self.model.fetchListGames(id: dataPlatforms[self.index].id)
+                                self.model.send(event: .onSelectPlatform(dataPlatforms[self.index].id))
                             }) {
                                 Image("chevron.left")
                                     .foregroundColor(Color(red: 247 / 255, green: 164 / 255, blue: 10 / 255))
@@ -73,7 +73,8 @@ struct ContentView: View {
                                 if self.index == 4{
                                     self.index = 0
                                 }
-                                //                                self.model.fetchListGames(id: dataPlatforms[self.index].id)
+                        
+                                self.model.send(event: .onSelectPlatform(dataPlatforms[self.index].id))
                             }) {
                                 Image("chevron.right")
                                     .foregroundColor(Color(red: 247 / 255, green: 164 / 255, blue: 10 / 255))
@@ -103,14 +104,6 @@ struct ContentView: View {
                         content
                     }
                     
-                    //                        VStack{
-                    //                            ForEach(self.model.games){ game in
-                    //                                NavigationLink(destination: DetailView(model: DetailViewModel(gameid: String(game.id)))){
-                    //                                    GameItemView(game: game)
-                    //                                }
-                    //                            }.listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-                    //                        }
-                    
                 }
                 .padding(24)
                 
@@ -129,7 +122,7 @@ struct ContentView: View {
                             Image(systemName: "info.circle").foregroundColor(Color(red: 241 / 255, green: 79 / 255, blue: 114 / 255)).font(.system(size: 26))
                         }
                 })
-        }.onAppear {self.model.send(event: .onAppear)}
+        }.onAppear {self.model.send(event: .onSelectPlatform(dataPlatforms[self.index].id))}
     }
     
     private var content: some View {

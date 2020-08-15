@@ -42,7 +42,7 @@ final class GamesListViewModel: ObservableObject {
 extension GamesListViewModel {
     enum State {
         case idle
-        case loading
+        case loading(String)
         case loaded([ListGame])
         case error(Error)
     }
@@ -78,9 +78,10 @@ extension GamesListViewModel {
         case .idle:
             switch event {
             case .onAppear:
-                return .loading`
-            case .onSelectPlatform(String):
-                return .loading
+                return .loading("18")
+            case .onSelectPlatform(let id):
+                print("select")
+                return .loading(id)
             default:
                 return state
             }
@@ -90,28 +91,35 @@ extension GamesListViewModel {
             case .onFailedToLoadGames(let error):
                 return .error(error)
             case .onGamesLoaded(let games):
+                print(games)
                 return .loaded(games)
             default:
                 return state
             }
             
         case .loaded:
-            return state
-            
+            switch event {
+            case .onSelectPlatform(let id):
+                
+                return .loading(id)
+            default:
+                return state
+            }
         case .error:
             return state
         }
     }
     
     static func userInput(input: AnyPublisher<Event, Never>) -> Feedback<State, Event> {
-        Feedback { _ in input }
+        Feedback { _ in
+            return input }
     }
     
     static func whenLoading() -> Feedback<State, Event> {
         Feedback { (state: State) -> AnyPublisher<Event, Never> in
-            guard case .loading = state else { return Empty().eraseToAnyPublisher() }
+            guard case .loading(let id) = state else { return Empty().eraseToAnyPublisher() }
             
-            return GamesApi.gamePlatform()
+            return GamesApi.gamePlatform(id: id)
                 .map { $0.results.map(ListGame.init) }
                 .map(Event.onGamesLoaded)
                 .catch { Just(Event.onFailedToLoadGames($0)) }

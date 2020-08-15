@@ -14,7 +14,8 @@ enum GamesApi {
     private static let call = Call()
     
     static func gamePlatform(id: String = "18") -> AnyPublisher<Games<Game>, Error> {
-        let request = URLComponents(url: URL(string: "https://api.rawg.io/api/games?platforms=7")!, resolvingAgainstBaseURL: true)!
+        print("id : \(id)")
+        let request = URLComponents(url: URL(string: "https://api.rawg.io/api/games?platforms=\(id)")!, resolvingAgainstBaseURL: true)!
             .request
         return call.run(request!)
     }
