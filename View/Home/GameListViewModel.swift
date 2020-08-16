@@ -91,7 +91,6 @@ extension GamesListViewModel {
             case .onFailedToLoadGames(let error):
                 return .error(error)
             case .onGamesLoaded(let games):
-                print(games)
                 return .loaded(games)
             default:
                 return state
@@ -100,7 +99,6 @@ extension GamesListViewModel {
         case .loaded:
             switch event {
             case .onSelectPlatform(let id):
-                
                 return .loading(id)
             default:
                 return state

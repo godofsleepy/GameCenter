@@ -10,12 +10,17 @@ import Foundation
 import Combine
 
 enum GamesApi {
-    private static let base = URL(string: "https://api.rawg.io/api/")!
     private static let call = Call()
     
     static func gamePlatform(id: String = "18") -> AnyPublisher<Games<Game>, Error> {
-        print("id : \(id)")
         let request = URLComponents(url: URL(string: "https://api.rawg.io/api/games?platforms=\(id)")!, resolvingAgainstBaseURL: true)!
+            .request
+        return call.run(request!)
+    }
+    
+    static func detail(id: String) -> AnyPublisher<Detail, Error> {
+        print("id : \(id)")
+        let request = URLComponents(url: URL(string: "https://api.rawg.io/api/games/\(id)")!, resolvingAgainstBaseURL: true)!
             .request
         return call.run(request!)
     }

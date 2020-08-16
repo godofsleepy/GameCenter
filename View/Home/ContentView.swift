@@ -140,7 +140,9 @@ struct ContentView: View {
     
     private func list(of games: [GamesListViewModel.ListGame]) -> some View {
         return ForEach(games){ game in
-            GameItemView(game: game)
+            NavigationLink(destination: DetailView(model: DetailViewModel(gameId: String(game.id)))){
+                GameItemView(game: game)
+            }
         }.listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0,trailing: 0))
     }
 }
