@@ -1,19 +1,26 @@
 //
-//  GameListViewModel.swift
+//  SearchViewModel.swift
 //  GameCenter
 //
-//  Created by rifat khadafy on 12/08/20.
+//  Created by rifat khadafy on 18/08/20.
 //  Copyright © 2020 rifat khadafy. All rights reserved.
 //
 
 import Foundation
 import Combine
 
-final class GamesListViewModel: ObservableObject {
+final class SearchViewModel: ObservableObject {
     @Published private(set) var state = State.idle
     
     private var bag = Set<AnyCancellable>()
     private let input = PassthroughSubject<Event, Never>()
+    
+    var query: String = "" {
+        willSet(search) {
+            print(search)
+        }
+    }
+    
     
     init() {
         Publishers.system(
@@ -38,8 +45,7 @@ final class GamesListViewModel: ObservableObject {
     }
 }
 
-
-extension GamesListViewModel {
+extension SearchViewModel {
     enum State {
         case idle
         case loading(String)
@@ -48,23 +54,21 @@ extension GamesListViewModel {
     }
     
     enum Event {
-        case onAppear
-        case onSelectGames(Int)
-        case onSelectPlatform(String)
+        case onSearchGame(String)
         case onGamesLoaded([ListGame])
         case onFailedToLoadGames(Error)
     }
+    
 
 }
 
-extension GamesListViewModel {
+extension SearchViewModel {
     static func reduce(_ state: State,_ event: Event) -> State {
         switch state {
         case .idle:
             switch event {
-            case .onSelectPlatform(let id):
-                print("select")
-                return .loading(id)
+            case .onSearchGame(let query):
+                return .loading(query)
             default:
                 return state
             }
@@ -81,8 +85,8 @@ extension GamesListViewModel {
             
         case .loaded:
             switch event {
-            case .onSelectPlatform(let id):
-                return .loading(id)
+            case .onSearchGame(let query):
+                return .loading(query)
             default:
                 return state
             }
@@ -98,9 +102,9 @@ extension GamesListViewModel {
     
     static func whenLoading() -> Feedback<State, Event> {
         Feedback { (state: State) -> AnyPublisher<Event, Never> in
-            guard case .loading(let id) = state else { return Empty().eraseToAnyPublisher() }
+            guard case .loading(let query) = state else { return Empty().eraseToAnyPublisher() }
             
-            return GamesApi.gamePlatform(id: id)
+            return GamesApi.gameSearch(query: query)
                 .map { $0.results.map(ListGame.init) }
                 .map(Event.onGamesLoaded)
                 .catch { Just(Event.onFailedToLoadGames($0)) }
@@ -108,5 +112,4 @@ extension GamesListViewModel {
         }
     }
 }
-
 

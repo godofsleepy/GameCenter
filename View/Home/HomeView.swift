@@ -1,8 +1,8 @@
 //
-//  ContentView.swift
+//  HomeView.swift
 //  GameCenter
 //
-//  Created by rifat khadafy on 12/08/20.
+//  Created by rifat khadafy on 18/08/20.
 //  Copyright © 2020 rifat khadafy. All rights reserved.
 //
 
@@ -10,30 +10,11 @@ import SwiftUI
 import SDWebImage
 import SDWebImageSwiftUI
 
-
-struct ContentView: View {
+struct HomeView: View {
     @ObservedObject var model = GamesListViewModel()
     @State var index = 0
     @State var selection: Int? = nil
-    
-    init() {
-        UITableView.appearance().tableFooterView = UIView()
-        //        Mengganti warna background list
-        UITableView.appearance().backgroundColor = UIColor(red: 37/255.0, green: 19/255.0, blue: 51/255.0, alpha: 1.0)
-        
-        UITableViewCell.appearance().backgroundColor = UIColor(red: 37/255.0, green: 19/255.0, blue: 51/255.0, alpha: 1.0)
-        
-        // To remove all separators including the actual ones:
-        UITableView.appearance().separatorStyle = .none
-        
-        //Use this if NavigationBarTitle is with Large Font
-        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor(red: 241/255.0, green: 79/255.0, blue: 114/255.0, alpha: 1.0)]
-        
-        //Use this if NavigationBarTitle is with displayMode = .inline
-        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor:UIColor(red: 241/255.0, green: 79/255.0, blue: 114/255.0, alpha: 1.0)]
-    }
-    
-    
+
     
     var body: some View {
         
@@ -110,12 +91,7 @@ struct ContentView: View {
                 
             } // ZStack
                 .navigationBarTitle("Home")
-                .navigationBarItems(leading: Button(action: {
-                    print("Edit button pressed...")
-                }) {
-                    Image(systemName: "magnifyingglass").foregroundColor(Color(red: 241 / 255, green: 79 / 255, blue: 114 / 255))
-                        .font(.system(size: 26))
-                    }, trailing: NavigationLink(destination: ProfileView(),tag: 1,selection: $selection){
+                .navigationBarItems(trailing: NavigationLink(destination: ProfileView(),tag: 1,selection: $selection){
                         Button(action: {
                             self.selection = 1
                         }) {
@@ -138,7 +114,7 @@ struct ContentView: View {
         }
     }
     
-    private func list(of games: [GamesListViewModel.ListGame]) -> some View {
+    private func list(of games: [ListGame]) -> some View {
         return ForEach(games){ game in
             NavigationLink(destination: DetailView(model: DetailViewModel(gameId: String(game.id)))){
                 GameItemView(game: game)
@@ -147,4 +123,8 @@ struct ContentView: View {
     }
 }
 
-
+struct HomeView_Previews: PreviewProvider {
+    static var previews: some View {
+        HomeView()
+    }
+}

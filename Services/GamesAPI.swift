@@ -24,6 +24,12 @@ enum GamesApi {
             .request
         return call.run(request!)
     }
+    
+    static func gameSearch(query: String) -> AnyPublisher<Games<Game>, Error> {
+           let request = URLComponents(url: URL(string: "https://api.rawg.io/api/games?search=\(query)&platforms=7,18,4,1")!, resolvingAgainstBaseURL: true)!
+               .request
+           return call.run(request!)
+       }
 }
 
 private extension URLComponents {

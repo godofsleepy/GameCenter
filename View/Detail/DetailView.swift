@@ -21,7 +21,7 @@ struct DetailView : View {
     private var contentDetail: some View {
         switch model.state {
         case .idle:
-            return Color.clear.eraseToAnyView()
+            return Color.clear.eraseToAnyView() 
         case .loading:
             return Spinner(isAnimating: true, style: .large).eraseToAnyView()
         case .error(let error):
