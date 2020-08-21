@@ -15,13 +15,6 @@ final class SearchViewModel: ObservableObject {
     private var bag = Set<AnyCancellable>()
     private let input = PassthroughSubject<Event, Never>()
     
-    var query: String = "" {
-        willSet(search) {
-            print(search)
-        }
-    }
-    
-    
     init() {
         Publishers.system(
             initial: state,

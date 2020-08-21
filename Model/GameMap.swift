@@ -12,8 +12,8 @@ struct ListGame: Identifiable {
     let id : Int
     let name : String
     let rating : Double
-    let released : String
-    let background_image : String
+    let released : String?
+    let background_image : String?
     
     init(game: Game) {
         id = game.id

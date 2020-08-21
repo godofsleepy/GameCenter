@@ -52,25 +52,6 @@ extension DetailViewModel {
         case onFailedToLoad(Error)
     }
     
-    struct GameDetail {
-        let name : String
-        let released : String
-        let rating : Double
-        let description  : String
-        let background_image : String
-        let parent_platforms : [platforms]
-        let genres : [genre]
-        
-        init(game: Detail) {
-            name = game.name
-            released = game.released
-            rating = game.rating
-            description = game.description
-            background_image = game.background_image
-            parent_platforms = game.parent_platforms
-            genres = game.genres
-        }
-    }
 }
 
 extension DetailViewModel {

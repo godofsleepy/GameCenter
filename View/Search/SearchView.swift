@@ -10,7 +10,7 @@ import SwiftUI
 
 struct SearchView: View {
     @ObservedObject var model = SearchViewModel()
-    @State var username: String = ""
+    @State var query: String = ""
     
     var body: some View {
         
@@ -21,14 +21,14 @@ struct SearchView: View {
                     HStack {
                         HStack {
                             Image(systemName: "magnifyingglass").foregroundColor(Color(red: 247 / 255, green: 164 / 255, blue: 10 / 255))
-                            TextField("Search", text: $username,onCommit: {
-                                self.model.send(event: .onSearchGame(self.username))
+                            TextField("Search", text: $query,onCommit: {
+                                self.model.send(event: .onSearchGame(self.query))
                             }).foregroundColor(Color.white)
                             
                             
-                            if !username.isEmpty {
+                            if !query.isEmpty {
                                 Button(action: {
-                                    self.username = ""
+                                    self.query = ""
                                 }) {
                                     Image(systemName: "xmark.circle.fill").foregroundColor(Color(red: 247 / 255, green: 164 / 255, blue: 10 / 255))
                                 }
@@ -58,7 +58,7 @@ struct SearchView: View {
         case .loading:
             return Spinner(isAnimating: true, style: .large).eraseToAnyView()
         case .error(let error):
-            return Text(error.localizedDescription).eraseToAnyView()
+            return Text(error.localizedDescription).foregroundColor(Color.white).eraseToAnyView()
         case .loaded(let games):
             return list(of: games).eraseToAnyView()
         }

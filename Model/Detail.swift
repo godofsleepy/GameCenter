@@ -9,16 +9,18 @@
 import Foundation
 
 struct Detail : Codable {
+    let id : Int
     let name : String
-    let released : String
+    let released : String?
     let rating : Double
-    let description  : String
-    let background_image : String
+    let description  : String?
+    let background_image : String?
     let parent_platforms : [platforms]
     let genres : [genre]
     
     enum CodingKeys: String, CodingKey {
         case name = "name"
+        case id = "id"
         case released = "released"
         case rating = "rating"
         case description = "description"

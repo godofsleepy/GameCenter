@@ -31,20 +31,20 @@ struct DetailView : View {
         }
     }
     
-    private func detail(data : DetailViewModel.GameDetail) -> some View {
+    private func detail(data : GameDetail) -> some View {
         ScrollView {
             ZStack(alignment: .top){
                 GeometryReader { geometry in
                     VStack {
                         if geometry.frame(in: .global).minY <= 0 {
-                            WebImage(url: URL(string: data.background_image))
+                            WebImage(url: URL(string: data.background_image ?? ""))
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .frame(width: geometry.size.width, height: geometry.size.height + geometry.frame(in: .global).minY)
                                 .clipped()
                                 .offset(y: -geometry.frame(in: .global).minY)
                         } else {
-                            WebImage(url: URL(string: data.background_image))
+                            WebImage(url: URL(string: data.background_image ?? ""))
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .frame(width: geometry.size.width, height: geometry.size.height)
@@ -84,7 +84,7 @@ struct DetailView : View {
                             .foregroundColor(.white)
                         
                         HStack{
-                            Text("Released \(data.released)")
+                            Text("Released \(data.released ?? "uknown")")
                                 .fontWeight(.light)
                                 .font(.system(size: 16))
                                 .foregroundColor(.white)
@@ -108,9 +108,44 @@ struct DetailView : View {
                         
                     }.frame(minWidth: 0, maxWidth: .infinity).padding(.bottom)
                     
-                    Text(data.description.replacingOccurrences(of: "<[^>]+>", with: "" ,options: .regularExpression, range: nil))
-                        .foregroundColor(.white)
-                        .padding(16)
+                    if (data.description != nil ){
+                        Text(data.description!.replacingOccurrences(of: "<[^>]+>", with: "" ,options: .regularExpression, range: nil) )
+                            .foregroundColor(.white)
+                            .padding(.vertical)
+                    }else {
+                        Text("no description")
+                            .foregroundColor(.white)
+                            .padding(.vertical)
+                        
+                    }
+                    
+                    
+                    HStack(alignment: .center){
+                        if 2 == 3 {
+                            Button(action: {
+                                print("Button action")
+                            }) {
+                                HStack {
+                                    Image(systemName: "plus").foregroundColor(.white)
+                                    Text("Add to favorite").foregroundColor(.white)
+                                }.padding(7)
+                                    .background(Color(red: 247 / 255, green: 164 / 255, blue: 10 / 255))
+                                    .cornerRadius(30)
+                            }
+                        }else {
+                            Button(action: {
+                                print("Button action")
+                            }) {
+                                HStack {
+                                    Image(systemName: "plus").foregroundColor(Color(red: 247 / 255, green: 164 / 255, blue: 10 / 255))
+                                    Text("Add to favorite").foregroundColor(Color(red: 247 / 255, green: 164 / 255, blue: 10 / 255))
+                                }.padding(7)
+                                    .overlay( RoundedRectangle(cornerRadius: 20).stroke(Color(red: 247 / 255, green: 164 / 255, blue: 10 / 255), lineWidth: 2)
+                                )
+                            }
+                            
+                        }
+                    }.frame(minWidth: 0, maxWidth: .infinity)
                     
                     Text("Platform")
                         .foregroundColor(Color(red: 241 / 255, green: 79 / 255, blue: 114 / 255))
@@ -127,9 +162,10 @@ struct DetailView : View {
                                         .cornerRadius(100)
                                     
                                 }
-                            }
-                        }
+                            }                        }
                     }
+                    
+                    
                 }
                 .padding()
                 .background(RoundedCorners(color: Color(red: 37 / 255, green: 19 / 255, blue: 51 / 255), tl: 0, tr: 65, bl: 0, br: 0))

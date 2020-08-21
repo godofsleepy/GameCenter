@@ -10,9 +10,11 @@ import Foundation
 
 struct Games<T: Codable>: Codable {
     let results: [T]
+    let count : Int
     
     enum CodingKeys: String, CodingKey {
            case results = "results"
+           case count = "count"
        }
 }
 
@@ -20,8 +22,8 @@ struct Game : Codable {
     let id : Int
     let name : String
     let rating : Double
-    let released : String
-    let background_image : String
+    let released : String?
+    let background_image : String?
     
     enum CodingKeys: String, CodingKey {
         case name = "name"

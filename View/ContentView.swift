@@ -47,7 +47,7 @@ struct ContentView: View {
                  Image(systemName: "heart.fill")
                  Text("Favorite")
             }
-        }.accentColor(Color(red: 247 / 255, green: 164 / 255, blue: 10 / 255))
+        }.accentColor(Color(red: 241 / 255, green: 79 / 255, blue: 114 / 255))
 
     }
     
