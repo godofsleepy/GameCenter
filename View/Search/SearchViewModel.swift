@@ -52,7 +52,7 @@ extension SearchViewModel {
         case onFailedToLoadGames(Error)
     }
     
-
+    
 }
 
 extension SearchViewModel {

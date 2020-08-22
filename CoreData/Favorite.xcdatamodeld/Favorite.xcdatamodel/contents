@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19F101" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="GameFav" representedClassName="GameFav" syncable="YES" codeGenerationType="class">
-        <attribute name="background_image" optional="YES" attributeType="String"/>
+    <entity name="GameFav" representedClassName="GameFav" syncable="YES">
         <attribute name="desc" optional="YES" attributeType="String"/>
+        <attribute name="genre" optional="YES" attributeType="Transformable"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="image" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="plaform" optional="YES" attributeType="Transformable"/>
         <attribute name="rating" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="released" optional="YES" attributeType="String"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
-    <entity name="Genres" representedClassName="Genres" syncable="YES" codeGenerationType="class">
-        <attribute name="name" optional="YES" attributeType="String"/>
-    </entity>
-    <entity name="Platfroms" representedClassName="Platfroms" syncable="YES" codeGenerationType="class"/>
     <elements>
-        <element name="GameFav" positionX="-54" positionY="-9" width="128" height="133"/>
-        <element name="Genres" positionX="-36" positionY="72" width="128" height="58"/>
-        <element name="Platfroms" positionX="-18" positionY="63" width="128" height="43"/>
+        <element name="GameFav" positionX="-63" positionY="-18" width="128" height="163"/>
     </elements>
 </model>

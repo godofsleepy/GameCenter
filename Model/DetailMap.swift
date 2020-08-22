@@ -28,4 +28,20 @@ struct GameDetail  {
         parent_platforms = game.parent_platforms
         genres = game.genres
     }
+    
+    public func getGenre() -> [String] {
+        var genreArray : [String] = []
+        for i in genres {
+            genreArray.append(i.name)
+        }
+        return genreArray
+    }
+    
+    public func getPlatform() -> [String] {
+        var platformArray : [String] = []
+        for i in parent_platforms {
+            platformArray.append(i.platform.slug)
+        }
+        return platformArray
+    }
 }

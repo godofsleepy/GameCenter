@@ -9,30 +9,34 @@
 import SwiftUI
 
 struct FavoriteView: View {
+    @Environment(\.managedObjectContext) var moc
+    @FetchRequest(entity: GameFav.entity(), sortDescriptors: []) var games : FetchedResults<GameFav>
+    
     var body: some View {
         NavigationView{
-            ZStack{
-                Color(red: 37 / 255, green: 19 / 255, blue: 51 / 255).edgesIgnoringSafeArea(.all)
-                VStack {
-                    Spacer()
-                    HStack {
-                        Spacer()
-                        Button(action: {
-                            print("got it")
-                        }, label: {
-                            Text("+").font(.system(.largeTitle))
-                            .frame(width: 47, height: 40)
-                            .foregroundColor(Color.white)
-                            .padding(.bottom, 7)
-                        }).background(Color(red: 247 / 255, green: 164 / 255, blue: 10 / 255))
-                        .cornerRadius(38.5)
-                        .padding()
-                    }
+            VStack {
+                List {
+                    ForEach(games, id:\.self){ game in
+                        NavigationLink(destination: FavoriteDetailView(data: game)){
+                            FavGameItemView(game: game)
+                        }
+                    }.onDelete(perform: removeGames)
                 }
+                
             }
-            
-        .navigationBarTitle("Favorite")
+                
+            .navigationBarTitle("Favorite")
+            .navigationBarItems(trailing: EditButton())
         }
+    }
+    
+    func removeGames(at offsets: IndexSet) {
+        for index in offsets {
+            let game = games[index]
+            moc.delete(game)
+        }
+        
+        try? moc.save()
     }
 }
 

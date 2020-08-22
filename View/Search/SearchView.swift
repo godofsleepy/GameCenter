@@ -36,7 +36,7 @@ struct SearchView: View {
                         }
                         .padding()
                         .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(red: 247 / 255, green: 164 / 255, blue: 10 / 255), lineWidth: 1))
-                                                
+                        
                     }.padding(.horizontal).padding(.vertical)
                     
                     ScrollView{
@@ -46,7 +46,7 @@ struct SearchView: View {
                     }
                 }
             }
-        .navigationBarTitle("Search")
+            .navigationBarTitle("Search")
         }
         
     }

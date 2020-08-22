@@ -45,14 +45,13 @@ struct ProfileView: View {
                         .foregroundColor(Color(red: 241 / 255, green: 79 / 255, blue: 114 / 255)).padding(.bottom).font(.system(size: 18))
                     
                     Text(data.description_me).foregroundColor(Color.white)
-                    
                 }
                 
             }
             .frame(minWidth: 0, maxWidth: .infinity, alignment: .topLeading).padding(24)
             
         }.navigationBarTitle("About")
-
+        
     }
 }
 

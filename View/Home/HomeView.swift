@@ -14,7 +14,7 @@ struct HomeView: View {
     @ObservedObject var model = GamesListViewModel()
     @State var index = 0
     @State var selection: Int? = nil
-
+    
     
     var body: some View {
         
@@ -54,7 +54,7 @@ struct HomeView: View {
                                 if self.index == 4{
                                     self.index = 0
                                 }
-                        
+                                
                                 self.model.send(event: .onSelectPlatform(dataPlatforms[self.index].id))
                             }) {
                                 Image("chevron.right")
@@ -92,11 +92,11 @@ struct HomeView: View {
             } // ZStack
                 .navigationBarTitle("Home")
                 .navigationBarItems(trailing: NavigationLink(destination: ProfileView(),tag: 1,selection: $selection){
-                        Button(action: {
-                            self.selection = 1
-                        }) {
-                            Image(systemName: "info.circle").foregroundColor(Color(red: 241 / 255, green: 79 / 255, blue: 114 / 255)).font(.system(size: 26))
-                        }
+                    Button(action: {
+                        self.selection = 1
+                    }) {
+                        Image(systemName: "info.circle").foregroundColor(Color(red: 241 / 255, green: 79 / 255, blue: 114 / 255)).font(.system(size: 26))
+                    }
                 })
         }.onAppear {self.model.send(event: .onSelectPlatform(dataPlatforms[self.index].id))}
     }

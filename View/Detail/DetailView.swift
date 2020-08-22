@@ -12,6 +12,8 @@ import SDWebImageSwiftUI
 
 struct DetailView : View {
     @ObservedObject var model : DetailViewModel
+    @Environment(\.managedObjectContext) var moc
+    @FetchRequest(entity: GameFav.entity(), sortDescriptors: []) var games : FetchedResults<GameFav>
     
     var body: some View{
         contentDetail
@@ -121,9 +123,10 @@ struct DetailView : View {
                     
                     
                     HStack(alignment: .center){
-                        if 2 == 3 {
+                        if (checkID(id: data.id) == true) {
                             Button(action: {
-                                print("Button action")
+                                self.deleteGame(id: data.id)
+                                try? self.moc.save()
                             }) {
                                 HStack {
                                     Image(systemName: "plus").foregroundColor(.white)
@@ -134,7 +137,8 @@ struct DetailView : View {
                             }
                         }else {
                             Button(action: {
-                                print("Button action")
+                                self.AddGame(data: data)
+                                try? self.moc.save()
                             }) {
                                 HStack {
                                     Image(systemName: "plus").foregroundColor(Color(red: 247 / 255, green: 164 / 255, blue: 10 / 255))
@@ -175,5 +179,34 @@ struct DetailView : View {
         
     }
     
+    private func checkID(id : Int) -> Bool {
+        for game in games {
+            if game.wrappedId == id {
+                return true
+            }
+        }
+        return false
+    }
+    
+    
+    private func deleteGame(id : Int)  {
+        for game in games {
+            if game.wrappedId == id {
+                moc.delete(game)
+            }
+        }
+    }
+    
+    private func AddGame(data: GameDetail){
+        let country = GameFav(context: self.moc)
+        country.id = Int64(data.id)
+        country.name = data.name
+        country.desc = data.description
+        country.image = data.background_image
+        country.rating = data.rating
+        country.released = data.released
+        country.genre = data.getGenre() as [NSString]
+        country.plaform = data.getPlatform() as [NSString]
+    }
     
 }

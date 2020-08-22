@@ -28,6 +28,8 @@ struct ContentView: View {
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor:UIColor(red: 241/255.0, green: 79/255.0, blue: 114/255.0, alpha: 1.0)]
     }
     
+    @Environment(\.managedObjectContext) var moc
+    
     var body: some View {
         TabView{
             HomeView()
@@ -43,7 +45,7 @@ struct ContentView: View {
             }
             
             FavoriteView()
-              .tabItem {
+                .tabItem {
                  Image(systemName: "heart.fill")
                  Text("Favorite")
             }
